@@ -1,0 +1,29 @@
+name: Pull Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Pull Docker image
+        run: |
+          docker pull ubuntu:latest  # Replace with your image name
+          docker images  # List the images to confirm it's pulled
+
+      # Optionally, you can use the image in a subsequent step
+      - name: Run Docker container
+        run: |
+          docker run --rm ubuntu:latest echo "Docker image is running"
